@@ -6,7 +6,7 @@ import { SignOut, Warning } from "@phosphor-icons/react";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 
 export default function NavBar() {

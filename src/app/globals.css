@@ -15,7 +15,7 @@
   }
 
   .button {
-    @apply p-4 rounded-md bg-cyan-800 border border-cyan-900 text-white transition;
+    @apply p-4 rounded-md bg-cyan-800 border border-cyan-900 text-slate-50 transition;
   }
 
   .button:hover {

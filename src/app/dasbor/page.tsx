@@ -1,4 +1,5 @@
 "use client";
+import Loading from "@/components/Loading";
 import NavBar from "@/components/NavBar";
 import { API_URL } from "@/utils/env";
 import { ArrowRight, CaretCircleRight } from "@phosphor-icons/react";
@@ -16,8 +17,28 @@ export default function Dashboard() {
     }
   }, [router]);
 
+  const [loading, setLoading] = useState(true);
   const [bookCount, setBookCount] = useState(0);
 
+  const [userName, setUserName] = useState("");
+  useEffect(() => {
+    axios
+      .get(`${API_URL}/user`, {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      })
+      .then((response) => {
+        if (response.status == 200) {
+          setUserName(response.data.name);
+        } else {
+          toast.error(response.data.message);
+        }
+      })
+      .catch((error) => {
+        toast.error("Terjadi kendala saat mengambil data akun");
+      });
+  }, []);
   useEffect(() => {
     axios
       .get(`${API_URL}/books`, {
@@ -28,6 +49,7 @@ export default function Dashboard() {
       .then((response) => {
         if (response.status == 200) {
           setBookCount(response.data.total);
+          setLoading(false);
         }
       })
       .catch((error) => {
@@ -39,20 +61,24 @@ export default function Dashboard() {
     <main className="flex min-h-screen flex-col items-center">
       <NavBar />
       <div className="container p-4">
-        <div className="text-4xl font-bold text-cyan-900">Dasbor</div>
+        <div className="text-4xl font-bold text-cyan-900">
+          Selamat Datang{userName ? `, ${userName}` : ""}
+        </div>
         <div className="mt-4 grid grid-cols-1 sm:grid-cols-3">
           <Link
             href="/buku"
             className="flex justify-between items-center card bg-cyan-600 text-slate-50"
           >
             <div className="flex flex-col">
-              <div className="text-4xl font-semibold">{bookCount}</div>
+              <div className="text-4xl font-semibold">
+                {loading ? <Loading light={true} /> : bookCount}
+              </div>
               <div className="text-xl font-light">Total Buku</div>
             </div>
             <CaretCircleRight size={32} />
           </Link>
         </div>
-        <div className="mt-4 card">
+        {/* <div className="mt-4 card">
           <div className="text-2xl font-semibold">Buku Terbaru</div>
           <div className="mt-4 border-t">
             {bookCount > 0 ? (
@@ -63,7 +89,7 @@ export default function Dashboard() {
               </div>
             )}
           </div>
-        </div>
+        </div> */}
       </div>
     </main>
   );

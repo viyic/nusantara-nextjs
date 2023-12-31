@@ -7,28 +7,18 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import { type Book } from "@/app/buku/page";
 
 export default function BukuTambah() {
   const router = useRouter();
-  type formType = {
-    isbn: string;
-    title: string;
-    subtitle: string;
-    author: string;
-    published: string;
-    publisher: string;
-    pages: number;
-    description: string;
-    website: string;
-  };
   const {
     handleSubmit,
     register,
     formState: { errors },
     ...form
-  } = useForm<formType>();
+  } = useForm<Book>();
 
-  const onSubmit: SubmitHandler<formType> = (data) => {
+  const onSubmit: SubmitHandler<Book> = (data) => {
     console.log();
     axios
       .post(
@@ -46,7 +36,8 @@ export default function BukuTambah() {
       .then((response) => {
         if (response.status == 200) {
           toast.success(response.data.message);
-          //   router.push("/buku");
+          form.reset();
+          router.push("/buku");
         } else {
           toast.error(response.data.message);
         }
@@ -56,7 +47,7 @@ export default function BukuTambah() {
       });
   };
 
-  const onSubmitError: SubmitErrorHandler<formType> = (errors) => {
+  const onSubmitError: SubmitErrorHandler<Book> = (errors) => {
     // if (errors.email) {
     //   toast.error("Surel tidak valid");
     //   return;
@@ -80,7 +71,7 @@ export default function BukuTambah() {
                 type="text"
                 {...register("isbn", { required: true })}
                 aria-invalid={!!errors.isbn}
-                className="input max-w-xs"
+                className="input w-full sm:max-w-xs"
               />
             </div>
 
@@ -90,7 +81,7 @@ export default function BukuTambah() {
                 type="text"
                 {...register("title", { required: true })}
                 aria-invalid={!!errors.title}
-                className="input max-w-lg"
+                className="input w-full sm:max-w-lg"
               />
             </div>
 
@@ -100,7 +91,7 @@ export default function BukuTambah() {
                 type="text"
                 {...register("subtitle", { required: true })}
                 aria-invalid={!!errors.title}
-                className="input max-w-lg"
+                className="input w-full sm:max-w-lg"
               />
             </div>
 
@@ -109,7 +100,7 @@ export default function BukuTambah() {
               <textarea
                 {...register("description", { required: true })}
                 aria-invalid={!!errors.description}
-                className="input max-w-lg"
+                className="input w-full sm:max-w-lg"
               />
             </div>
 
@@ -120,7 +111,7 @@ export default function BukuTambah() {
                 min={0}
                 {...register("pages", { required: true, valueAsNumber: true })}
                 aria-invalid={!!errors.pages}
-                className="input max-w-xs"
+                className="input w-full sm:max-w-xs"
               />
             </div>
 
@@ -130,7 +121,7 @@ export default function BukuTambah() {
                 type="text"
                 {...register("author", { required: true })}
                 aria-invalid={!!errors.author}
-                className="input max-w-xs"
+                className="input w-full sm:max-w-xs"
               />
             </div>
 
@@ -140,7 +131,7 @@ export default function BukuTambah() {
                 type="text"
                 {...register("publisher", { required: true })}
                 aria-invalid={!!errors.publisher}
-                className="input max-w-xs"
+                className="input w-full sm:max-w-xs"
               />
             </div>
 
@@ -153,7 +144,7 @@ export default function BukuTambah() {
                   valueAsDate: true,
                 })}
                 aria-invalid={!!errors.published}
-                className="input max-w-xs"
+                className="input w-full sm:max-w-xs"
               />
             </div>
 
@@ -163,7 +154,7 @@ export default function BukuTambah() {
                 type="url"
                 {...register("website", { required: true })}
                 aria-invalid={!!errors.website}
-                className="input max-w-xs"
+                className="input w-full sm:max-w-xs"
               />
             </div>
             <div className="flex justify-end">
