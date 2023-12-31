@@ -12,6 +12,7 @@
     "@headlessui/react": "^1.7.17",
     "@phosphor-icons/react": "^2.0.15",
     "axios": "^1.6.3",
+    "date-fns": "^3.0.6",
     "next": "14.0.4",
     "nextjs-toploader": "^1.6.4",
     "react": "^18",

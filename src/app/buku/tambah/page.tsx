@@ -2,6 +2,7 @@
 import { API_URL } from "@/utils/env";
 import { CaretRight } from "@phosphor-icons/react";
 import axios from "axios";
+import { format, formatISO, formatISO9075 } from "date-fns";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
@@ -28,12 +29,20 @@ export default function BukuTambah() {
   } = useForm<formType>();
 
   const onSubmit: SubmitHandler<formType> = (data) => {
+    console.log();
     axios
-      .post(`${API_URL}/books/add`, data, {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
+      .post(
+        `${API_URL}/books/add`,
+        {
+          ...data,
+          published: formatISO9075(data.published),
         },
-      })
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        }
+      )
       .then((response) => {
         if (response.status == 200) {
           toast.success(response.data.message);
