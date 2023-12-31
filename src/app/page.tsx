@@ -53,7 +53,7 @@ function Login() {
   } = useForm<formType>();
 
   const onSubmit: SubmitHandler<formType> = async (data) => {
-    const response = await axios.post(`${API_URL}/login`, JSON.stringify(data));
+    const response = await axios.post(`${API_URL}/login`, data);
     if (response.status == 200) {
       toast.success(response.data.message);
     } else {
@@ -117,7 +117,7 @@ function Signup() {
       toast.error("Kata sandi konfirmasi tidak sesuai");
       return;
     }
-    const response = await axios.post(`${API_URL}/login`, JSON.stringify(data));
+    const response = await axios.post(`${API_URL}/login`, data);
     if (response.status == 200) {
       toast.success(response.data.message);
     } else {
