@@ -54,7 +54,6 @@ function Login() {
 
   const onSubmit: SubmitHandler<formType> = async (data) => {
     const response = await axios.post(`${API_URL}/login`, JSON.stringify(data));
-    console.log(response);
     if (response.status == 200) {
       toast.success(response.data.message);
     } else {
@@ -119,7 +118,6 @@ function Signup() {
       return;
     }
     const response = await axios.post(`${API_URL}/login`, JSON.stringify(data));
-    console.log(response);
     if (response.status == 200) {
       toast.success(response.data.message);
     } else {
