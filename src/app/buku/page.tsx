@@ -55,6 +55,7 @@ export default function Dashboard() {
       })
       .then((response) => {
         if (response.status == 200) {
+          setLoading(false);
           setBooks(response.data.data);
           setMaxPage(response.data.last_page);
         }
