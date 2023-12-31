@@ -41,7 +41,7 @@ export default function Home() {
             : "Sudah memiliki akun? Masuk akun"}
         </div>
       </div>
-      <div>PT Nusantara Infrastructure Tbk</div>
+      <div>MSIB PT. Nusantara Infrastructure, Tbk</div>
     </main>
   );
 }
