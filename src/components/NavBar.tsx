@@ -41,13 +41,13 @@ export default function NavBar() {
       <div className="flex gap-4 absolute left-1/2 -translate-x-1/2">
         <Link
           href="/dasbor"
-          className="px-3 py-2 hover:bg-cyan-700 transition rounded-md w-20 text-center"
+          className="px-3 py-2 font-semibold hover:bg-cyan-700 transition rounded-md w-20 text-center"
         >
           Dasbor
         </Link>
         <Link
           href="/buku"
-          className="px-3 py-2 hover:bg-cyan-700 transition rounded-md w-20 text-center"
+          className="px-3 py-2 font-semibold hover:bg-cyan-700 transition rounded-md w-20 text-center"
         >
           Buku
         </Link>
@@ -90,22 +90,16 @@ export default function NavBar() {
                 leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
               >
                 <Dialog.Panel className="transform overflow-hidden rounded-md bg-slate-50 text-center shadow-md transition">
-                  <div className="px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                    <div className="">
-                      <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:h-10 sm:w-10">
-                        <Warning
-                          className="h-6 w-6 text-red-600"
-                          aria-hidden="true"
-                        />
-                      </div>
-                      <div className="mt-3 text-center">
-                        <Dialog.Title
-                          as="h3"
-                          className="leading-6 text-gray-900"
-                        >
-                          Apakah Anda yakin ingin keluar dari akun?
-                        </Dialog.Title>
-                      </div>
+                  <div className="px-4 pb-4 pt-5 sm:p-6 sm:pb-4 flex flex-col items-center">
+                    <Warning
+                      size={32}
+                      className="text-red-600"
+                      aria-hidden="true"
+                    />
+                    <div className="mt-3 text-center">
+                      <Dialog.Title as="h3" className="leading-6 text-gray-900">
+                        Apakah Anda yakin ingin keluar dari akun?
+                      </Dialog.Title>
                     </div>
                   </div>
                   <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:justify-center sm:px-6">

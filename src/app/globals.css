@@ -23,6 +23,6 @@
   }
 
   .card {
-    @apply p-8 rounded-md shadow-md;
+    @apply p-8 rounded-md shadow-md bg-slate-50;
   }
 }
