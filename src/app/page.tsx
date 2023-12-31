@@ -1,6 +1,7 @@
 "use client";
 
 import { API_URL } from "@/utils/env";
+import { Book, BookOpen } from "@phosphor-icons/react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -20,7 +21,8 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div></div>
-      <div className="card w-full max-w-[22rem] flex flex-col gap-8">
+      <div className="card w-full max-w-[22rem] flex flex-col gap-8 items-center">
+        <BookOpen size={64} />
         <div className="font-bold text-xl text-center">
           {showLoginForm ? "Masuk Akun" : "Buat Akun"}
         </div>
