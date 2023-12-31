@@ -2,17 +2,24 @@
 
 import { API_URL } from "@/utils/env";
 import axios from "axios";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 export default function Home() {
+  const router = useRouter();
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      router.push("/dasbor");
+    }
+  }, [router]);
+
   const [showLoginForm, setShowLoginForm] = useState(true);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div></div>
-      {/* <div>Selamat datang! Silakan log in.</div> */}
       <div className="card w-full max-w-[22rem] flex flex-col gap-8">
         <div className="font-bold text-xl text-center">
           {showLoginForm ? "Masuk Akun" : "Buat Akun"}
@@ -24,7 +31,6 @@ export default function Home() {
         <div className={showLoginForm ? "hidden" : ""}>
           <Signup />
         </div>
-        {/* {showLoginForm ? <Login /> : <Signup />} */}
 
         <div
           onClick={() => setShowLoginForm(!showLoginForm)}
@@ -41,6 +47,7 @@ export default function Home() {
 }
 
 function Login() {
+  const router = useRouter();
   type formType = {
     email: string;
     password: string;
@@ -52,13 +59,21 @@ function Login() {
     ...form
   } = useForm<formType>();
 
-  const onSubmit: SubmitHandler<formType> = async (data) => {
-    const response = await axios.post(`${API_URL}/login`, data);
-    if (response.status == 200) {
-      toast.success(response.data.message);
-    } else {
-      toast.error(response.data.message);
-    }
+  const onSubmit: SubmitHandler<formType> = (data) => {
+    axios
+      .post(`${API_URL}/login`, data)
+      .then((response) => {
+        if (response.status == 200) {
+          toast.success(response.data.message);
+          localStorage.setItem("token", response.data.token);
+          router.push("/dasbor");
+        } else {
+          toast.error(response.data.message);
+        }
+      })
+      .catch((error) => {
+        toast.error("Terjadi kendala saat masuk akun");
+      });
   };
 
   const onSubmitError: SubmitErrorHandler<formType> = (errors) => {
@@ -112,17 +127,23 @@ function Signup() {
     ...form
   } = useForm<formType>();
 
-  const onSubmit: SubmitHandler<formType> = async (data) => {
+  const onSubmit: SubmitHandler<formType> = (data) => {
     if (data.password != data.password_confirmation) {
       toast.error("Kata sandi konfirmasi tidak sesuai");
       return;
     }
-    const response = await axios.post(`${API_URL}/login`, data);
-    if (response.status == 200) {
-      toast.success(response.data.message);
-    } else {
-      toast.error(response.data.message);
-    }
+    axios
+      .post(`${API_URL}/login`, data)
+      .then((response) => {
+        if (response.status == 200) {
+          toast.success(response.data.message);
+        } else {
+          toast.error(response.data.message);
+        }
+      })
+      .catch((error) => {
+        toast.error("Terjadi kendala saat buat akun");
+      });
   };
 
   const onSubmitError: SubmitErrorHandler<formType> = (errors) => {
