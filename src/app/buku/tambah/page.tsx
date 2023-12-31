@@ -48,6 +48,14 @@ export default function BukuTambah() {
   };
 
   const onSubmitError: SubmitErrorHandler<formType> = (errors) => {
+    // if (errors.email) {
+    //   toast.error("Surel tidak valid");
+    //   return;
+    // }
+    // if (errors.password) {
+    //   toast.error("Kata sandi tidak valid");
+    //   return;
+    // }
   };
   return (
     <>
@@ -81,7 +89,7 @@ export default function BukuTambah() {
               <div className="">Subjudul</div>
               <input
                 type="text"
-                {...register("title", { required: true })}
+                {...register("subtitle", { required: true })}
                 aria-invalid={!!errors.title}
                 className="input max-w-lg"
               />
@@ -97,9 +105,10 @@ export default function BukuTambah() {
             </div>
 
             <div className="flex flex-col gap-2">
-              <div className="">Total Halaman</div>
+              <div className="">Jumlah Halaman</div>
               <input
                 type="number"
+                min={0}
                 {...register("pages", { required: true, valueAsNumber: true })}
                 aria-invalid={!!errors.pages}
                 className="input max-w-xs"
@@ -107,7 +116,7 @@ export default function BukuTambah() {
             </div>
 
             <div className="flex flex-col gap-2">
-              <div className="">Penulis</div>
+              <div className="">Pengarang</div>
               <input
                 type="text"
                 {...register("author", { required: true })}
@@ -127,7 +136,7 @@ export default function BukuTambah() {
             </div>
 
             <div className="flex flex-col gap-2">
-              <div className="">Tanggal Rilis</div>
+              <div className="">Tanggal Publikasi</div>
               <input
                 type="date"
                 {...register("published", {
